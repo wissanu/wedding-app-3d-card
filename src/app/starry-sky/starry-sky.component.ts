@@ -37,10 +37,32 @@ export class StarrySkyComponent implements AfterViewInit {
 
     // Mouse move event
     window.addEventListener('mousemove', (event) => {
-      this.mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      this.mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+      this.mouseX = (event.clientX / window.innerWidth) * 10 - 1;
+      this.mouseY = -(event.clientY / window.innerHeight) * 10 + 1;
     });
   }
+
+  // private createStartNew(): void {
+  //   var skyDomeRadius = 500.01;
+  //   var sphereMaterial = new THREE.ShaderMaterial({
+  //     uniforms: {
+  //       skyRadius: { value: skyDomeRadius },
+  //       env_c1: { value: new THREE.Color("#0d1a2f") },
+  //       env_c2: { value: new THREE.Color("#0f8682") },
+  //       noiseOffset: { value: new THREE.Vector3(100.01, 100.01, 100.01) },
+  //       starSize: { value: 0.01 },
+  //       starDensity: { value: 0.09 },
+  //       clusterStrength: { value: 0.2 },
+  //       clusterSize: { value: 0.2 },
+  //     },
+  //     vertexShader: StarrySkyShader.vertexShader,
+  //     fragmentShader: StarrySkyShader.fragmentShader,
+  //     side: THREE.DoubleSide,
+  //   })
+  //   var sphereGeometry = new THREE.SphereGeometry(skyDomeRadius, 20, 20);
+  //   var skyDome = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  //   this.scene.add(skyDome);
+  // }
 
   private createStars(): void {
     const geometry = new THREE.BufferGeometry();
@@ -55,7 +77,7 @@ export class StarrySkyComponent implements AfterViewInit {
 
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
-    const material = new THREE.PointsMaterial({ color: 0xffffff, size: 2 });
+    const material = new THREE.PointsMaterial({ color: 0xffffff, size: 4 });
     const stars = new THREE.Points(geometry, material);
     this.scene.add(stars);
     this.stars.push(stars);
