@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import * as THREE from 'three';
 
 @Component({
@@ -6,92 +6,129 @@ import * as THREE from 'three';
   templateUrl: './starry-sky.component.html',
   styleUrls: ['./starry-sky.component.css']
 })
-export class StarrySkyComponent implements AfterViewInit {
-  private scene!: THREE.Scene;
-  private camera!: THREE.PerspectiveCamera;
+export class StarrySkyComponent implements OnInit, OnDestroy {
   private renderer!: THREE.WebGLRenderer;
-  private stars: THREE.Points[] = [];
-  private mouseX = 0;
-  private mouseY = 0;
-
-  constructor(private el: ElementRef) {}
-
-  ngAfterViewInit(): void {
-    this.initThreeJS();
-    this.createStars();
-    this.animate();
-  }
-
-  private initThreeJS(): void {
-    // Scene
-    this.scene = new THREE.Scene();
-
-    // Camera
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.z = 5;
-
-    // Renderer
-    this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.el.nativeElement.appendChild(this.renderer.domElement);
-
-    // Mouse move event
-    window.addEventListener('mousemove', (event) => {
-      this.mouseX = (event.clientX / window.innerWidth) * 10 - 1;
-      this.mouseY = -(event.clientY / window.innerHeight) * 10 + 1;
-    });
-  }
-
-  // private createStartNew(): void {
-  //   var skyDomeRadius = 500.01;
-  //   var sphereMaterial = new THREE.ShaderMaterial({
-  //     uniforms: {
-  //       skyRadius: { value: skyDomeRadius },
-  //       env_c1: { value: new THREE.Color("#0d1a2f") },
-  //       env_c2: { value: new THREE.Color("#0f8682") },
-  //       noiseOffset: { value: new THREE.Vector3(100.01, 100.01, 100.01) },
-  //       starSize: { value: 0.01 },
-  //       starDensity: { value: 0.09 },
-  //       clusterStrength: { value: 0.2 },
-  //       clusterSize: { value: 0.2 },
-  //     },
-  //     vertexShader: StarrySkyShader.vertexShader,
-  //     fragmentShader: StarrySkyShader.fragmentShader,
-  //     side: THREE.DoubleSide,
-  //   })
-  //   var sphereGeometry = new THREE.SphereGeometry(skyDomeRadius, 20, 20);
-  //   var skyDome = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  //   this.scene.add(skyDome);
-  // }
-
-  private createStars(): void {
-    const geometry = new THREE.BufferGeometry();
-    const vertices = [];
-
-    for (let i = 0; i < 1000; i++) {
-      const x = (Math.random() - 0.5) * 2000;
-      const y = (Math.random() - 0.5) * 2000;
-      const z = (Math.random() - 0.5) * 2000;
-      vertices.push(x, y, z);
+    private scene!: THREE.Scene;
+    private camera!: THREE.PerspectiveCamera;
+    private starsT1!: THREE.Points;
+    private starsT2!: THREE.Points;
+    private mouseX = 0;
+    private mouseY = 0;
+  
+    constructor(private el: ElementRef) {}
+  
+    ngOnInit(): void {
+      this.initThreeJS();
+      this.animate();
+      this.addMouseMoveListener();
     }
-
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-
-    const material = new THREE.PointsMaterial({ color: 0xffffff, size: 4 });
-    const stars = new THREE.Points(geometry, material);
-    this.scene.add(stars);
-    this.stars.push(stars);
-  }
-
-  private animate(): void {
-    requestAnimationFrame(() => this.animate());
-
-    // Move stars based on mouse position
-    this.stars.forEach((star) => {
-      star.rotation.x += this.mouseY * 0.0001;
-      star.rotation.y += this.mouseX * 0.0001;
-    });
-
-    this.renderer.render(this.scene, this.camera);
-  }
+  
+    ngOnDestroy(): void {
+      // Clean up the renderer and any other resources
+      if (this.renderer) {
+        this.renderer.dispose();
+      }
+    }
+  
+    private initThreeJS(): void {
+      const canvas = this.el.nativeElement.querySelector('#c');
+  
+      // Renderer
+      this.renderer = new THREE.WebGLRenderer({ canvas });
+      this.renderer.setClearColor(new THREE.Color('#1c1624'));
+  
+      // Scene
+      this.scene = new THREE.Scene();
+  
+      // Light
+      const color = 0xffffff;
+      const intensity = 1;
+      const light = new THREE.DirectionalLight(color, intensity);
+      light.position.set(-1, 2, 4);
+      this.scene.add(light);
+  
+      // Camera
+      const fov = 75,
+        aspect = 2,
+        near = 1.5,
+        far = 5;
+      this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+      this.camera.position.z = 2;
+  
+      // Geometries
+      const geometrys = [new THREE.BufferGeometry(), new THREE.BufferGeometry()];
+      geometrys[0].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(350), 3));
+      geometrys[1].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(1500), 3));
+  
+      // Texture Loader
+      const loader = new THREE.TextureLoader();
+  
+      // Materials
+      const materials = [
+        new THREE.PointsMaterial({
+          size: 0.05,
+          map: loader.load('assets/sp1.png'),
+          transparent: true,
+        }),
+        new THREE.PointsMaterial({
+          size: 0.075,
+          map: loader.load('assets/sp2.png'),
+          transparent: true,
+        }),
+      ];
+  
+      // Points
+      this.starsT1 = new THREE.Points(geometrys[0], materials[0]);
+      this.starsT2 = new THREE.Points(geometrys[1], materials[1]);
+      this.scene.add(this.starsT1);
+      this.scene.add(this.starsT2);
+    }
+  
+    private getRandomParticlePos(particleCount: number): Float32Array {
+      const arr = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount; i++) {
+        arr[i] = (Math.random() - 0.5) * 10;
+      }
+      return arr;
+    }
+  
+    private resizeRendererToDisplaySize(): boolean {
+      const canvas = this.renderer.domElement;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      const needResize = canvas.width !== width || canvas.height !== height;
+      if (needResize) {
+        this.renderer.setSize(width, height, false);
+        this.camera.aspect = width / height;
+        this.camera.updateProjectionMatrix();
+      }
+      return needResize;
+    }
+  
+    private addMouseMoveListener(): void {
+      document.addEventListener('mousemove', (e) => {
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
+      });
+    }
+  
+    private animate(): void {
+      const render = (time: number) => {
+        if (this.resizeRendererToDisplaySize()) {
+          const canvas = this.renderer.domElement;
+          this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          this.camera.updateProjectionMatrix();
+        }
+  
+        this.starsT1.position.x = this.mouseX * 0.0001;
+        this.starsT1.position.y = this.mouseY * -0.0001;
+  
+        this.starsT2.position.x = this.mouseX * 0.0001;
+        this.starsT2.position.y = this.mouseY * -0.0001;
+  
+        this.renderer.render(this.scene, this.camera);
+        requestAnimationFrame(render);
+      };
+      requestAnimationFrame(render);
+    }
 }
