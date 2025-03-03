@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import * as THREE from 'three';
 
 @Component({
@@ -8,127 +8,216 @@ import * as THREE from 'three';
 })
 export class StarrySkyComponent implements OnInit, OnDestroy {
   private renderer!: THREE.WebGLRenderer;
-    private scene!: THREE.Scene;
-    private camera!: THREE.PerspectiveCamera;
-    private starsT1!: THREE.Points;
-    private starsT2!: THREE.Points;
-    private mouseX = 0;
-    private mouseY = 0;
-  
-    constructor(private el: ElementRef) {}
-  
-    ngOnInit(): void {
-      this.initThreeJS();
-      this.animate();
-      this.addMouseMoveListener();
+  private scene!: THREE.Scene;
+  private camera!: THREE.PerspectiveCamera;
+  private starsT1!: THREE.Points;
+  private starsT2!: THREE.Points;
+  private mouseX = 0;
+  private mouseY = 0;
+  private cardGroup!: THREE.Group;
+  private texturesLoaded = false;
+  private shouldRotate = true; // Flag to control auto-rotation
+
+  constructor(private el: ElementRef) {}
+
+  ngOnInit(): void {
+    this.initThreeJS();
+    this.addMouseMoveListener();
+    this.addWindowResizeListener();
+    this.addClickListener(); // Add click event listener
+  }
+
+  ngOnDestroy(): void {
+    if (this.renderer) {
+      this.renderer.dispose();
     }
-  
-    ngOnDestroy(): void {
-      // Clean up the renderer and any other resources
-      if (this.renderer) {
-        this.renderer.dispose();
+    window.removeEventListener('resize', this.onWindowResize);
+    document.removeEventListener('click', this.toggleRotation); // Remove click event listener
+  }
+
+  private initThreeJS(): void {
+    const canvas = this.el.nativeElement.querySelector('#c');
+
+    // Renderer
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+    });
+    this.renderer.setClearColor(new THREE.Color('#1c1624'));
+    this.setRendererSize();
+
+    // Scene
+    this.scene = new THREE.Scene();
+
+    // Light
+    const color = 0xffffff;
+    const intensity = 1;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(-1, 2, 4);
+    this.scene.add(light);
+
+    // Camera
+    const fov = 45;
+    const aspect = canvas.clientWidth / canvas.clientHeight;
+    const near = 0.1;
+    const far = 100;
+    this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    this.camera.position.z = 1.5;
+
+    // Geometries
+    const geometrys = [new THREE.BufferGeometry(), new THREE.BufferGeometry()];
+    geometrys[0].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(350), 3));
+    geometrys[1].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(1500), 3));
+
+    // Texture Loader with Loading Manager
+    const loadingManager = new THREE.LoadingManager(
+      () => {
+        this.texturesLoaded = true;
+        this.animate();
+      },
+      (url, loaded, total) => {
+        console.log(`Loading ${url}: ${loaded}/${total}`);
+      },
+      (url) => {
+        console.error(`Failed to load ${url}`);
       }
+    );
+
+    const loader = new THREE.TextureLoader(loadingManager);
+
+    // Load textures
+    const frontTexture = loader.load('assets/images/front.png');
+    const backTexture = loader.load('assets/images/back.png');
+
+    // Flip the back texture
+    backTexture.repeat.x = -1;
+    backTexture.offset.x = 1;
+
+    // Materials for particles (sp1 and sp2)
+    const particleMaterials = [
+      new THREE.PointsMaterial({
+        size: 0.05,
+        map: loader.load('assets/sp1.png'),
+        transparent: true,
+        depthWrite: false, // Disable depth writing for particles
+      }),
+      new THREE.PointsMaterial({
+        size: 0.075,
+        map: loader.load('assets/sp2.png'),
+        transparent: true,
+        depthWrite: false, // Disable depth writing for particles
+      }),
+    ];
+
+    // Points (starry sky particles)
+    this.starsT1 = new THREE.Points(geometrys[0], particleMaterials[0]);
+    this.starsT2 = new THREE.Points(geometrys[1], particleMaterials[1]);
+
+    // Set renderOrder for particles (render first)
+    this.starsT1.renderOrder = 1;
+    this.starsT2.renderOrder = 1;
+
+    this.scene.add(this.starsT1);
+    this.scene.add(this.starsT2);
+
+    // Add 3D Card
+    this.add3DCard(frontTexture, backTexture);
+  }
+
+  private add3DCard(frontTexture: THREE.Texture, backTexture: THREE.Texture): void {
+    // Create a plane geometry for the card
+    const cardGeometry = new THREE.PlaneGeometry(1, 1.5);
+
+    // Create materials for the front and back
+    const frontMaterial = new THREE.MeshBasicMaterial({
+      map: frontTexture,
+      side: THREE.FrontSide,
+      transparent: true,
+    });
+
+    const backMaterial = new THREE.MeshBasicMaterial({
+      map: backTexture,
+      side: THREE.BackSide,
+      transparent: true,
+    });
+
+    // Create meshes for the front and back
+    const frontMesh = new THREE.Mesh(cardGeometry, frontMaterial);
+    const backMesh = new THREE.Mesh(cardGeometry, backMaterial);
+
+    // Position the back mesh behind the front mesh
+    backMesh.position.z = -0.01;
+
+    // Create a group to hold both front and back meshes
+    this.cardGroup = new THREE.Group();
+    this.cardGroup.add(frontMesh);
+    this.cardGroup.add(backMesh);
+
+    // Set renderOrder for the card (render last)
+    this.cardGroup.renderOrder = 2;
+
+    // Position the card group in the scene
+    this.cardGroup.position.set(0, 0, -1);
+
+    // Add the card group to the scene
+    this.scene.add(this.cardGroup);
+  }
+
+  private getRandomParticlePos(particleCount: number): Float32Array {
+    const arr = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      arr[i] = (Math.random() - 0.5) * 10;
     }
-  
-    private initThreeJS(): void {
-      const canvas = this.el.nativeElement.querySelector('#c');
-  
-      // Renderer
-      this.renderer = new THREE.WebGLRenderer({ canvas });
-      this.renderer.setClearColor(new THREE.Color('#1c1624'));
-  
-      // Scene
-      this.scene = new THREE.Scene();
-  
-      // Light
-      const color = 0xffffff;
-      const intensity = 1;
-      const light = new THREE.DirectionalLight(color, intensity);
-      light.position.set(-1, 2, 4);
-      this.scene.add(light);
-  
-      // Camera
-      const fov = 75,
-        aspect = 2,
-        near = 1.5,
-        far = 5;
-      this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-      this.camera.position.z = 2;
-  
-      // Geometries
-      const geometrys = [new THREE.BufferGeometry(), new THREE.BufferGeometry()];
-      geometrys[0].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(350), 3));
-      geometrys[1].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(1500), 3));
-  
-      // Texture Loader
-      const loader = new THREE.TextureLoader();
-  
-      // Materials
-      const materials = [
-        new THREE.PointsMaterial({
-          size: 0.05,
-          map: loader.load('assets/sp1.png'),
-          transparent: true,
-        }),
-        new THREE.PointsMaterial({
-          size: 0.075,
-          map: loader.load('assets/sp2.png'),
-          transparent: true,
-        }),
-      ];
-  
-      // Points
-      this.starsT1 = new THREE.Points(geometrys[0], materials[0]);
-      this.starsT2 = new THREE.Points(geometrys[1], materials[1]);
-      this.scene.add(this.starsT1);
-      this.scene.add(this.starsT2);
-    }
-  
-    private getRandomParticlePos(particleCount: number): Float32Array {
-      const arr = new Float32Array(particleCount * 3);
-      for (let i = 0; i < particleCount; i++) {
-        arr[i] = (Math.random() - 0.5) * 10;
+    return arr;
+  }
+
+  private addWindowResizeListener(): void {
+    window.addEventListener('resize', this.onWindowResize.bind(this));
+  }
+
+  private onWindowResize(): void {
+    this.setRendererSize();
+    this.camera.aspect = this.renderer.domElement.clientWidth / this.renderer.domElement.clientHeight;
+    this.camera.updateProjectionMatrix();
+  }
+
+  private setRendererSize(): void {
+    const canvas = this.renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const pixelRatio = window.devicePixelRatio;
+
+    this.renderer.setSize(width, height, false);
+    this.renderer.setPixelRatio(Math.min(pixelRatio, 2));
+  }
+
+  private addMouseMoveListener(): void {
+    document.addEventListener('mousemove', (e) => {
+      this.mouseX = e.clientX;
+      this.mouseY = e.clientY;
+    });
+  }
+
+  private addClickListener(): void {
+    document.addEventListener('click', this.toggleRotation.bind(this));
+  }
+
+  private toggleRotation(): void {
+    this.shouldRotate = !this.shouldRotate; // Toggle the rotation flag
+  }
+
+  private animate(): void {
+    if (!this.texturesLoaded) return;
+
+    const render = (time: number) => {
+      // Rotate the card group for a 3D effect if shouldRotate is true
+      if (this.cardGroup && this.shouldRotate) {
+        this.cardGroup.rotation.y += 0.01;
       }
-      return arr;
-    }
-  
-    private resizeRendererToDisplaySize(): boolean {
-      const canvas = this.renderer.domElement;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      const needResize = canvas.width !== width || canvas.height !== height;
-      if (needResize) {
-        this.renderer.setSize(width, height, false);
-        this.camera.aspect = width / height;
-        this.camera.updateProjectionMatrix();
-      }
-      return needResize;
-    }
-  
-    private addMouseMoveListener(): void {
-      document.addEventListener('mousemove', (e) => {
-        this.mouseX = e.clientX;
-        this.mouseY = e.clientY;
-      });
-    }
-  
-    private animate(): void {
-      const render = (time: number) => {
-        if (this.resizeRendererToDisplaySize()) {
-          const canvas = this.renderer.domElement;
-          this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
-          this.camera.updateProjectionMatrix();
-        }
-  
-        this.starsT1.position.x = this.mouseX * 0.0001;
-        this.starsT1.position.y = this.mouseY * -0.0001;
-  
-        this.starsT2.position.x = this.mouseX * 0.0001;
-        this.starsT2.position.y = this.mouseY * -0.0001;
-  
-        this.renderer.render(this.scene, this.camera);
-        requestAnimationFrame(render);
-      };
+
+      this.renderer.render(this.scene, this.camera);
       requestAnimationFrame(render);
-    }
+    };
+    requestAnimationFrame(render);
+  }
 }

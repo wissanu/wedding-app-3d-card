@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 @Injectable({
   providedIn: 'root'
@@ -18,21 +19,33 @@ export class ThreeService {
   initialize(canvas: HTMLCanvasElement): void {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     canvas.appendChild(this.renderer.domElement);
-
+  
     // Set up camera
     this.camera.position.z = 5;
-
+  
+    // Add OrbitControls
+    const controls = new OrbitControls(this.camera, this.renderer.domElement);
+    controls.enableDamping = true; // Enable smooth camera movement
+    controls.dampingFactor = 0.05; // Adjust damping factor
+    controls.screenSpacePanning = true; // Allow panning in screen space
+    controls.minDistance = 1; // Minimum zoom distance
+    controls.maxDistance = 10; // Maximum zoom distance
+  
     // Add lighting
     const light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(1, 1, 1).normalize();
     this.scene.add(light);
-
+  
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
+  
+      // Update controls in the animation loop
+      controls.update();
+  
       this.renderer.render(this.scene, this.camera);
     };
-
+  
     animate();
   }
 
