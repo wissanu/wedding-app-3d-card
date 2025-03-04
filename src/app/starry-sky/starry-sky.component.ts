@@ -65,6 +65,10 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     this.camera.position.z = 1.5;
 
+    // Adjust camera position for mobile devices
+    const isMobile = window.innerWidth <= 768; // Check if the device is mobile
+    this.camera.position.z = isMobile ? 2.5 : 1.5; // Zoom out for mobile devices
+
     // Geometries
     const geometrys = [new THREE.BufferGeometry(), new THREE.BufferGeometry(), new THREE.BufferGeometry()];
     geometrys[0].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(7500), 3));
@@ -189,6 +193,10 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     this.setRendererSize();
     this.camera.aspect = this.renderer.domElement.clientWidth / this.renderer.domElement.clientHeight;
     this.camera.updateProjectionMatrix();
+
+     // Adjust camera position for mobile devices on resize
+    const isMobile = window.innerWidth <= 768; // Check if the device is mobile
+    this.camera.position.z = isMobile ? 2.5 : 1.5; // Zoom out for mobile devices
   }
 
   private setRendererSize(): void {
