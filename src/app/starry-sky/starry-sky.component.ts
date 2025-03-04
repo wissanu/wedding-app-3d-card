@@ -12,6 +12,7 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
   private camera!: THREE.PerspectiveCamera;
   private starsT1!: THREE.Points;
   private starsT2!: THREE.Points;
+  private starsT3!: THREE.Points;
   private mouseX = 0;
   private mouseY = 0;
   private cardGroup!: THREE.Group;
@@ -65,9 +66,10 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     this.camera.position.z = 1.5;
 
     // Geometries
-    const geometrys = [new THREE.BufferGeometry(), new THREE.BufferGeometry()];
-    geometrys[0].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(350), 3));
-    geometrys[1].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(1500), 3));
+    const geometrys = [new THREE.BufferGeometry(), new THREE.BufferGeometry(), new THREE.BufferGeometry()];
+    geometrys[0].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(7500), 3));
+    geometrys[1].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(15000), 3));
+    geometrys[2].setAttribute('position', new THREE.BufferAttribute(this.getRandomParticlePos(2500), 3));
 
     // Texture Loader with Loading Manager
     const loadingManager = new THREE.LoadingManager(
@@ -96,12 +98,17 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     // Materials for particles (sp1 and sp2)
     const particleMaterials = [
       new THREE.PointsMaterial({
-        size: 0.05,
+        size: 0.005,
         map: loader.load('assets/sp1.png'),
         transparent: true,
         depthWrite: false, // Disable depth writing for particles
       }),
       new THREE.PointsMaterial({
+        size: 0.0075,
+        map: loader.load('assets/sp2.png'),
+        transparent: true,
+        depthWrite: false, // Disable depth writing for particles
+      }),new THREE.PointsMaterial({
         size: 0.075,
         map: loader.load('assets/sp2.png'),
         transparent: true,
@@ -112,13 +119,16 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     // Points (starry sky particles)
     this.starsT1 = new THREE.Points(geometrys[0], particleMaterials[0]);
     this.starsT2 = new THREE.Points(geometrys[1], particleMaterials[1]);
+    this.starsT3 = new THREE.Points(geometrys[2], particleMaterials[2]);
 
     // Set renderOrder for particles (render first)
     this.starsT1.renderOrder = 1;
     this.starsT2.renderOrder = 1;
+    this.starsT3.renderOrder = 1;
 
     this.scene.add(this.starsT1);
     this.scene.add(this.starsT2);
+    this.scene.add(this.starsT3);
 
     // Add 3D Card
     this.add3DCard(frontTexture, backTexture);
@@ -208,13 +218,28 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
 
   private animate(): void {
     if (!this.texturesLoaded) return;
-
+  
     const render = (time: number) => {
       // Rotate the card group for a 3D effect if shouldRotate is true
       if (this.cardGroup && this.shouldRotate) {
         this.cardGroup.rotation.y += 0.01;
       }
-
+  
+      // Flash effect for particles
+      const flashSpeed = 0.01; // Speed of the flash effect
+      const scale = Math.sin(time * flashSpeed) * 0.5 + 1; // Oscillate between 0.5 and 1.5
+      const dimmer = 0.001; // Speed of the flash effect
+      const opacity = Math.sin(time * dimmer) * 0.5 + 0.5; // Oscillate between 0 and 1
+  
+      // Apply the flash effect to sp1 and sp2 particles
+      if (this.starsT1.material instanceof THREE.PointsMaterial) {
+        this.starsT1.material.size = 0.005 * scale; // Adjust the base size as needed
+        this.starsT1.material.opacity = opacity;
+      }
+      if (this.starsT2.material instanceof THREE.PointsMaterial) {
+        this.starsT2.material.size = 0.0075 * scale; // Adjust the base size as needed
+      }
+  
       this.renderer.render(this.scene, this.camera);
       requestAnimationFrame(render);
     };
