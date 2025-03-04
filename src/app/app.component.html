@@ -1,1 +1,10 @@
-<app-starry-sky></app-starry-sky>
+<nav class="navbar">
+    <div class="navbar-brand">My App</div>
+    <ul class="navbar-links">
+      <li><a routerLink="#">Home</a></li> <!-- Link to the default route -->
+      <li><a routerLink="#">About</a></li> <!-- Link to the About route -->
+      <li><a routerLink="/starry-sky">Starry Sky</a></li> <!-- Link to the Starry Sky route -->
+    </ul>
+  </nav>
+  
+  <router-outlet></router-outlet> 

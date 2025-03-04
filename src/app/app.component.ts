@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'wedding-app-3d';
+
+  isNavActive = false;
+
+  toggleNav() {
+    this.isNavActive = !this.isNavActive;
+  }
 }
