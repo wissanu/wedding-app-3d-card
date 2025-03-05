@@ -26,7 +26,7 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
   private trails: THREE.Points[] = [];
   private textureLoader = new THREE.TextureLoader();
   private trailTexture!: THREE.Texture;
-  private lessGoldenTexture!: THREE.Texture;
+  private starTexture!: THREE.Texture;
 
   constructor(private el: ElementRef) {}
   
@@ -34,7 +34,7 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initThreeJS();
     this.trailTexture = this.textureLoader.load('assets/sp1.png');
-    this.lessGoldenTexture = this.textureLoader.load('assets/sp2.png');
+    this.starTexture = this.textureLoader.load('assets/sp2.png'); 
     this.addMouseMoveListener();
     this.addWindowResizeListener();
     this.addClickListener(); // Add click event listener
@@ -57,7 +57,9 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
       canvas,
       antialias: true,
     });
-    this.renderer.setClearColor(new THREE.Color('#1c1624'));
+    this.renderer.setClearColor(new THREE.Color('#1D2951'));
+    //rgb(133, 130, 100)
+    // #1c1624
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.setRendererSize();
     
@@ -248,17 +250,26 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     this.shouldRotate = !this.shouldRotate; // Toggle the rotation flag
   }
 
+
   private createShootingStar(): void {
     const starGeometry = new THREE.BufferGeometry();
+    const numParticles = 1;
+    const positions = new Float32Array(numParticles * 3);
+    positions[0] = 0; // X
+    positions[1] = 0; // Y
+    positions[2] = 0; // Z
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
     const starMaterial = new THREE.PointsMaterial({
-      color: 0xffd700,
-      size: 0.003,
+      size: 0.25,
+      color: 0xEEE8AA,
+      map: this.starTexture, // Use circular texture
       transparent: true,
-      opacity: 1,
+      opacity: 1.0,
+      depthWrite: false,
       blending: THREE.AdditiveBlending
     });
-    const positions = new Float32Array([0, 0, 0]);
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
     this.shootingStar = new THREE.Points(starGeometry, starMaterial);
     this.scene.add(this.shootingStar);
     this.moveShootingStar();
@@ -276,7 +287,16 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     gsap.to(this.shootingStar.position, {
       x: endX, y: endY, duration: this.starSpeed, ease: 'power1.out',
       onUpdate: () => this.createTrail(this.shootingStar.position.x, this.shootingStar.position.y),
-      onComplete: () => this.moveShootingStar()
+      onComplete: () => {
+        gsap.to(this.shootingStar.material, {
+          opacity: 0,
+          duration: this.trailDecaySpeed,
+          onComplete: () => {
+            this.scene.remove(this.shootingStar);
+            this.createShootingStar();
+          }
+        });
+      }
     });
   }
 
