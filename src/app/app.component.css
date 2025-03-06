@@ -1,6 +1,6 @@
 /* Make the navbar sticky */
 .navbar {
-  position: fixed; /* Fix the navbar to the top */
+  /* position: fixed; */
   top: 0; /* Position at the top of the viewport */
   left: 0; /* Align to the left */
   width: 100%; /* Full width */
