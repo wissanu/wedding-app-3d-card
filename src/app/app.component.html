@@ -18,44 +18,7 @@
     </ul>
   </nav>
   
-  <main>
-    <!-- Welcome Section -->
-    <section id="welcome" class="text-center py-10 bg-[#FAF3E0]">
-      <h1 class="text-4xl font-serif">John & Jane’s Wedding</h1>
-      <p class="text-lg">December 15, 2025</p>
-      <div id="countdown" class="text-2xl font-bold my-4"></div>
-      <p class="italic">Dress Code: Formal Attire</p>
-    </section>
-  
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-10 bg-white">
-      <h2 class="text-3xl text-center font-serif">Gallery & Moments</h2>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-5">
-        <img src="assets/photo1.jpg" class="rounded-lg shadow-md" />
-        <img src="assets/photo2.jpg" class="rounded-lg shadow-md" />
-        <img src="assets/photo3.jpg" class="rounded-lg shadow-md" />
-      </div>
-    </section>
-  
-    <!-- Guestbook Section -->
-    <!-- <section id="guestbook" class="py-10 bg-[#FAF3E0] text-center">
-      <h2 class="text-3xl font-serif">Guestbook & Wishes</h2>
-      <form (submit)="sendMessage()" class="mt-5">
-        <input type="text" [(ngModel)]="guestMessage" placeholder="Your message..." class="p-2 border rounded-md w-3/4">
-        <button type="submit" class="mt-2 bg-[#DBC6A7] text-white p-2 rounded-md">Send</button>
-      </form>
-      <div *ngFor="let message of messages" class="mt-3">
-        <p class="italic">"{{ message }}"</p>
-      </div>
-    </section> -->
-  
-    <!-- Wedding Details -->
-    <section id="details" class="py-10 bg-white text-center">
-      <h2 class="text-3xl font-serif">Wedding Details</h2>
-      <p>Grand Ballroom, The Ritz-Carlton</p>
-      <iframe src="https://www.google.com/maps/embed?..." class="w-full h-64 rounded-lg mt-3"></iframe>
-    </section>
-  </main>
+  <router-outlet></router-outlet> 
   
   <!-- Mobile Navbar -->
   <footer class="fixed bottom-0 w-full bg-[#F7E7CE] shadow-md py-2 text-center">
@@ -67,4 +30,3 @@
     </nav>
   </footer>
   
-  <router-outlet></router-outlet> 
