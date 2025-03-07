@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import * as THREE from 'three';
 import gsap from 'gsap';
+import * as StackBlur from 'stackblur-canvas';
 
 @Component({
   selector: 'app-starry-sky',
@@ -62,12 +63,19 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     // Scene
     this.scene = new THREE.Scene();
 
+    const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+    this.scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+    directionalLight.position.set(5, 5, 5);
+    this.scene.add(directionalLight);
+
     // Light
-    const color = 0xffffff;
-    const intensity = 1;
-    const light = new THREE.DirectionalLight(color, intensity);
-    light.position.set(-1, 2, 4);
-    this.scene.add(light);
+    // const color = 0xffffff;
+    // const intensity = 1;
+    // const light = new THREE.DirectionalLight(color, intensity);
+    // light.position.set(-1, 2, 4);
+    // this.scene.add(light);
 
     // Camera
     const fov = 45;
@@ -217,23 +225,33 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     canvas.height = window.innerHeight;
 
     if (ctx){
-      const gradient = ctx.createLinearGradient(0,0,0,canvas.height);
-      gradient.addColorStop(0, '#ffd1dc');
-      gradient.addColorStop(1, '#d8a7ff');
-      // gradient.addColorStop(0, '#FFF6B7');
-      // gradient.addColorStop(1, '#F6416C');
+      const gradient = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+      // gradient.addColorStop(0, '#ffd1dc');
+      // gradient.addColorStop(1, '#d8a7ff');
+      // #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #929ae7, #889aec, #7c9bf2, #7b8ff9, #8182fd, #8d72fd, #9c5ffb
+      gradient.addColorStop(1, '#d16ba5');
+      gradient.addColorStop(0, '#c777b9');
+      gradient.addColorStop(0, '#ba83ca');
+      gradient.addColorStop(1, '#aa8fd8');
+      gradient.addColorStop(0, '#9a9ae1');
+      gradient.addColorStop(1, '#929ae7');
+      gradient.addColorStop(0, '#889aec');
+      gradient.addColorStop(0, '#7c9bf2');
+      gradient.addColorStop(0, '#7b8ff9');
+      gradient.addColorStop(0, '#8182fd');
+      gradient.addColorStop(1, '#8d72fd');
+      gradient.addColorStop(1, '#9c5ffb');
       ctx.fillStyle = gradient;
       ctx.fillRect(0,0,canvas.width, canvas.height);
 
-      // apply blur effect
-      ctx.filter = 'blur(20px)';
-      ctx.drawImage(canvas, 0, 0);
+      // Apply blur effect
+      StackBlur.canvasRGBA(canvas, 0, 0, canvas.width, canvas.height, 20); // 20 is the blur radius
     }
 
     const bgTexture = new THREE.CanvasTexture(canvas);
-    bgTexture.minFilter = THREE.LinearFilter;
-    bgTexture.magFilter = THREE.LinearFilter;
     this.scene.background = bgTexture;
+
+    
   }
 
 

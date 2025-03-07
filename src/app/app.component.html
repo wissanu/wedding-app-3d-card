@@ -23,10 +23,15 @@
   <!-- Mobile Navbar -->
   <footer *ngIf='isMobile' class="fixed bottom-0 w-full bg-[#F7E7CE] shadow-md py-2 text-center">
     <nav class="flex justify-around text-lg font-bold">
-      <a href="#welcome" class="hover:text-[#DBC6A7]">🏠</a>
+      <!-- <a href="#welcome" class="hover:text-[#DBC6A7]">🏠</a>
       <a href="#gallery" class="hover:text-[#DBC6A7]">📷</a>
       <a href="#guestbook" class="hover:text-[#DBC6A7]">📝</a>
-      <a href="#details" class="hover:text-[#DBC6A7]">📍</a>
+      <a href="#details" class="hover:text-[#DBC6A7]">📍</a> -->
+      <li><a href="#welcome" class="hover:text-[#DBC6A7]">Welcome</a></li> 
+      <li><a href="#gallery" class="hover:text-[#DBC6A7]">Gallery</a></li> 
+      <li><a href="#guestbook" class="hover:text-[#DBC6A7]">Guestbook</a></li> 
+      <li><a href="#details" class="hover:text-[#DBC6A7]">Details</a></li> 
+      <li><a routerLink="/starry-sky">Starry Sky</a></li> 
     </nav>
   </footer>
   
