@@ -35,4 +35,8 @@
   color: #333; /* Adjust as needed */
 }
 
+nav, footer {
+  transition: opacity 0.3s ease-in-out;
+}
+
 /* Media query for mobile devices */

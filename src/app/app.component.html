@@ -7,7 +7,7 @@
       <a href="#details" class="hover:text-[#DBC6A7]">Details</a>
     </nav>
   </header> -->
-  <nav class="sticky navbar">
+  <nav *ngIf='!isMobile' class="sticky navbar">
     <div class="navbar-brand"><img src="./../assets/logo.png" alt="tor ploy wedding app"></div>
     <ul class="navbar-links">
       <li><a href="#welcome" class="hover:text-[#DBC6A7]">Welcome</a></li> 
@@ -21,7 +21,7 @@
   <router-outlet></router-outlet> 
   
   <!-- Mobile Navbar -->
-  <footer class="fixed bottom-0 w-full bg-[#F7E7CE] shadow-md py-2 text-center">
+  <footer *ngIf='isMobile' class="fixed bottom-0 w-full bg-[#F7E7CE] shadow-md py-2 text-center">
     <nav class="flex justify-around text-lg font-bold">
       <a href="#welcome" class="hover:text-[#DBC6A7]">🏠</a>
       <a href="#gallery" class="hover:text-[#DBC6A7]">📷</a>
