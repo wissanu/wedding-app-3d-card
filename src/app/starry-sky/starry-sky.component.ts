@@ -117,44 +117,6 @@ export class StarrySkyComponent implements OnInit, OnDestroy {
     this.add3DCard(frontTexture, backTexture);
   }
 
-  // private addParticles(): void {
-  //   const particleCount = 500;
-  //   const positions = new Float32Array(particleCount * 3);
-  //   const velocities = new Float32Array(particleCount * 3);
-  //   const sizes = new Float32Array(particleCount);
-    
-  //   for (let i = 0; i < particleCount; i++) {
-  //     positions[i * 3] = (Math.random() - 0.5) * 4000;
-  //     positions[i * 3 + 1] = (Math.random() - 0.5) * 1000;
-  //     positions[i * 3 + 2] = (Math.random() - 0.5) * 100 - 5;
-      
-  //     velocities[i * 3] = (Math.random() - 0.5) * 0.002;
-  //     velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.002;
-  //     velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.002;
-
-  //     sizes[i] = Math.random() * 0.5 + 0.1;
-  //   }
-
-  //   this.particles = new THREE.BufferGeometry();
-  //   this.particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  //   this.particles.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
-  //   this.particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-  //   this.particleMaterial = new THREE.PointsMaterial({
-  //     map: this.starTexture,
-  //     color: 0xffc0cb, // Soft pink glow
-  //     size: 0.4,
-  //     transparent: true,
-  //     opacity: 0.8,
-  //     depthWrite: false,
-  //     blending: THREE.AdditiveBlending
-  //   });
-
-  //   this.particleSystem = new THREE.Points(this.particles, this.particleMaterial);
-  //   this.particleSystem.position.z = -3;
-  //   this.particleSystem.renderOrder = 1;
-  //   this.scene.add(this.particleSystem);
-  // }
   private addParticles(): void {
     const particleCount = 1500;
     const positions = new Float32Array(particleCount * 3);
