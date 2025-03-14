@@ -12,13 +12,21 @@
     padding: 10px;
   }
 
+  .normal-space {
+    letter-spacing: 4px;
+    word-spacing: 5px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
   .handwrite-newline {
     white-space: pre-wrap;
   }
 
   @media screen and (max-width: 768px) {
     .mobile-bottom-30 {
-      bottom: 30%;
+      top: 30%;
     }
     .mobile-bottom-10 {
       bottom: 10%;
@@ -32,4 +40,8 @@
     .mobile-min-height {
       min-height: 600px !important;
     }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 900px) {
+    
   }

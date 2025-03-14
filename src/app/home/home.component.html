@@ -5,14 +5,14 @@
     <section id="welcome" class="text-center bg-[url('/assets/images/homebg4.png')] bg-cover bg-center h-screen">
         <div class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-screen">
             <!-- min-h-[600px] -->
-            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4 relative h-screen mobile-min-height">
-                <div class="order-last sm:order-first relative z-10 transform md:left-[calc(20%)] flex items-center flex-col justify-center mobile-bottom-30">
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 relative h-screen mobile-min-height">
+                <div class="relative z-10 transform lg:left-[calc(20%)] flex items-center flex-col justify-center"> <!--order-last sm:order-first-->
                     <h1 class="handwrite-text handwrite-space handwrite-newline text-[#BEBB4B] md:text-4xl sm:text-3xl">Wissanu Thungrut&#10;&&#10;Kamolthip Wiangwises</h1>
-                    <p class="text-lg">May 3, 2026</p>
+                    <p class="text-lg normal-text">May 3, 2026</p>
                     <div id="countdown" class="text-2xl font-bold my-4"></div>
                     <p class="italic">Dress Code: Formal Attire</p>
                 </div>
-                <div class="mobile-height-120 mobile-bottom-20 relative order-first sm:order-last"> <!-- 16:9 aspect ratio -->
+                <div class="mobile-height-120 mobile-bottom-20 relative"> <!-- order-first sm:order-last-->
                     <canvas id="c" class="w-full h-full"></canvas>
                 </div>
             </div>
@@ -20,8 +20,8 @@
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-10 bg-white">
-        <h2 class="text-3xl text-center font-serif">Gallery & Moments</h2>
+    <section id="gallery" class="py-20 bg-white">
+        <h2 class="text-3xl text-center normal-text">Gallery & Moments</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-5">
         <img src="assets/photo1.jpg" class="rounded-lg shadow-md" />
         <img src="assets/photo2.jpg" class="rounded-lg shadow-md" />
@@ -43,7 +43,7 @@
 
     <!-- Wedding Details -->
     <section id="details" class="py-10 bg-white text-center">
-        <h2 class="text-3xl font-serif">Wedding Details</h2>
+        <h2 class="text-3xl normal-text">Wedding Details</h2>
         <p>Grand Ballroom, The Ritz-Carlton</p>
         <iframe src="https://www.google.com/maps/embed?..." class="w-full h-64 rounded-lg mt-3"></iframe>
     </section>
