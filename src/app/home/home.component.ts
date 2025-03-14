@@ -38,7 +38,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     'assets/images/wed4.jpg',
     'assets/images/wed5.jpg',
   ];
-  public locationUrl = 'https://maps.app.goo.gl/HtKnU9PYRAJiCeou5'; 
+  // public locationUrl = 'https://maps.app.goo.gl/HtKnU9PYRAJiCeou5'; 
+  public locationUrl = 'https://www.google.com/maps/place/Vanessa+%7C+Wedding+Venue/@13.7150882,100.3089309,17z/data=!3m1!4b1!4m6!3m5!1s0x30e2959be89a8a95:0x366a3fd08017f0e1!8m2!3d13.715083!4d100.3115058!16s%2Fg%2F12hkzkwm_?coh=245189&entry=tts&g_ep=EgoyMDI1MDMxMS4wIPu8ASoJLDEwMjExNDU1SAFQAw%3D%3D';
   public qrCodeImage = 'assets/images/qrcode.png'; 
   public mapImage = 'assets/images/map_place.png'; 
 
