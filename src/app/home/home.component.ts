@@ -202,7 +202,7 @@ export class HomeComponent implements OnInit {
     const pixelRatio = window.devicePixelRatio;
 
     this.renderer.setSize(width, height, false);
-    // this.renderer.setPixelRatio(Math.min(pixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(pixelRatio, 2));
   }
 
   private animate(): void {
