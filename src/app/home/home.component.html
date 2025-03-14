@@ -48,64 +48,68 @@
       </section>
 
       <!-- Wedding Schedule for desktop -->
-      <section *ngIf='isMobile' id="wedding-schedule" class="container mx-auto px-4 py-20">
-        <h1 class="text-3xl text-center mb-8 py-10 eng-normal-text">Wedding Day Timeline</h1>
-        <div class="space-y-8 relative">
-          <!-- Timeline Line -->
-          <div class="absolute left-4 top-0 h-full w-1 bg-gray-300"></div>
-      
-          <!-- Timeline Items -->
-          <div *ngFor="let item of timelineItems; let i = index" class="flex items-start thai-normal-text-regular-100">
-            <!-- Icon and Time -->
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
-                <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
-              </div>
-            <div class="ml-4">
-              <div class="text-lg font-semibold">{{ item.time }}</div>
-              <div class="text-xl font-bold">{{ item.title }}</div>
-              <p class="text-gray-600">{{ item.description }}</p>
+      <section *ngIf='isMobile' id="wedding-schedule" class="relative bg-[url('/assets/images/homebg4.png')] bg-cover bg-center h-screen">
+        <div class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-screen">
+            <h1 class="text-3xl text-center mb-8 py-10 eng-normal-text">Wedding Day Timeline</h1>
+            <div class="space-y-8 relative backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10">
+                <!-- Timeline Line -->
+                <div class="absolute left-4 top-0 h-full w-1 bg-gray-300"></div>
+            
+                <!-- Timeline Items -->
+                <div *ngFor="let item of timelineItems; let i = index" class="flex items-start thai-normal-text-regular-100">
+                    <!-- Icon and Time -->
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
+                        <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
+                    </div>
+                    <div class="ml-4">
+                    <div class="text-lg font-semibold">{{ item.time }}</div>
+                    <div class="text-xl font-bold">{{ item.title }}</div>
+                    <p class="text-gray-600">{{ item.description }}</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
       </section>
 
       <!-- Wedding Schedule for mobile device -->
-      <section class="container mx-auto px-4 py-20">
-        <h1 class="text-3xl font-bold text-center mb-8 py-10 eng-normal-text">Wedding Day Timeline</h1>
-        <div class="space-y-8 relative">
-          <!-- Timeline Line -->
-          <div class="absolute left-1/2 top-0 h-full w-1 bg-gray-300 transform -translate-x-1/2"></div>
-      
-          <!-- Timeline Items -->
-          <div *ngFor="let item of timelineItems; let i = index" class="flex items-start justify-center thai-normal-text-regular-100">
-            <!-- For odd items (1, 3, 5), show text on the left -->
-            <div *ngIf="(i + 1) % 2 !== 0" class="flex flex-row-reverse items-center w-1/2">
-              <!-- Icon -->
-              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
-                <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
-              </div>
-              <!-- Text -->
-              <div class="mr-4 text-right">
-                <div class="text-lg font-semibold">{{ item.time }}</div>
-                <div class="text-xl font-bold">{{ item.title }}</div>
-                <p class="text-gray-600">{{ item.description }}</p>
-              </div>
+      <section *ngIf='!isMobile' class="relative bg-[url('/assets/images/homebg4.png')] bg-cover bg-center h-[80vh]">
+        <div class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-[80vh]">
+            <h1 class="text-3xl text-center mb-8 py-10 eng-normal-text">Wedding Day Timeline</h1>
+            <div class="space-y-8 relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-1/2 top-0 h-full w-1 bg-gray-300 transform -translate-x-1/2"></div>
+            
+                <!-- Timeline Items -->
+                <div *ngFor="let item of timelineItems; let i = index" class="flex items-start justify-center thai-normal-text-regular-100">
+                <!-- For odd items (1, 3, 5), show text on the left -->
+                <div *ngIf="(i + 1) % 2 !== 0" class="flex flex-row-reverse items-center w-1/2">
+                    <!-- Icon -->
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
+                    <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
+                    </div>
+                    <!-- Text -->
+                    <div class="mr-4 text-right">
+                    <div class="text-lg font-semibold">{{ item.time }}</div>
+                    <div class="text-xl font-bold">{{ item.title }}</div>
+                    <p class="text-gray-600">{{ item.description }}</p>
+                    </div>
+                </div>
+            
+                <!-- For even items (2, 4), show text on the right -->
+                <div *ngIf="(i + 1) % 2 === 0" class="flex items-center w-1/2">
+                    <!-- Icon -->
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
+                    <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
+                    </div>
+                    <!-- Text -->
+                    <div class="ml-4">
+                    <div class="text-lg font-semibold">{{ item.time }}</div>
+                    <div class="text-xl font-bold">{{ item.title }}</div>
+                    <p class="text-gray-600">{{ item.description }}</p>
+                    </div>
+                </div>
+                </div>
             </div>
-      
-            <!-- For even items (2, 4), show text on the right -->
-            <div *ngIf="(i + 1) % 2 === 0" class="flex items-center w-1/2">
-              <!-- Icon -->
-              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
-                <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
-              </div>
-              <!-- Text -->
-              <div class="ml-4">
-                <div class="text-lg font-semibold">{{ item.time }}</div>
-                <div class="text-xl font-bold">{{ item.title }}</div>
-                <p class="text-gray-600">{{ item.description }}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -122,11 +126,29 @@
     </section> -->
 
     <!-- Wedding Details -->
-    <section id="details" class="py-10 bg-white text-center">
-        <h2 class="text-3xl eng-normal-text">Wedding Details</h2>
-        <p>Grand Ballroom, The Ritz-Carlton</p>
-        <iframe src="https://www.google.com/maps/embed?..." class="w-full h-64 rounded-lg mt-3"></iframe>
-    </section>
+    <div class="container mx-auto px-4 py-20 sm:py-10">
+        <h2 class="text-3xl text-center mb-8 eng-normal-text py-10 sm:py-5">Location</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <!-- QR Code (Left) -->
+            <div class="flex flex-col items-center">
+                <img [src]="qrCodeImage" alt="QR Code for Location" class="w-48 h-48 mb-4" />
+            <p class="text-gray-600 text-sm text-center mt-2">สแกน QR CODE เพื่อเปิดแผนที่นำทาง</p>
+            </div>
+        
+            <!-- Map Image (Center) -->
+            <div class="flex justify-center">
+            <img [src]="mapImage" alt="Map Image" class="max-w-full h-auto rounded-lg shadow-lg" />
+            </div>
+        
+            <!-- Button Link (Right) -->
+            <div class="flex flex-col items-center">
+            <a [href]="locationUrl" target="_blank" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-300">
+                เปิดแผนที่นำทาง
+            </a>
+            <p class="text-gray-600 text-sm text-center mt-2">คลิกเพื่อเปิดแผนที่นำทาง</p>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- Mobile Navbar -->
 <footer *ngIf='isMobile' class="fixed bottom-0 w-full bg-[#F7E7CE] shadow-md py-2 text-center">

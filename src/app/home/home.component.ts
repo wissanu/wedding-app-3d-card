@@ -38,6 +38,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     'assets/images/wed4.jpg',
     'assets/images/wed5.jpg',
   ];
+  public locationUrl = 'https://maps.app.goo.gl/HtKnU9PYRAJiCeou5'; 
+  public qrCodeImage = 'assets/images/qrcode.png'; 
+  public mapImage = 'assets/images/map_place.png'; 
 
   timelineItems = [
     {
