@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     this.loadingService.show();
     this.initThreeJS();
     this.starTexture = this.textureLoader.load('assets/white_circle.png'); 
-    this.addWindowResizeListener();
+    // this.addWindowResizeListener();
     this.animate();
   }
 
@@ -182,8 +182,8 @@ export class HomeComponent implements OnInit {
     this.camera.updateProjectionMatrix();
 
      // Adjust camera position for mobile devices on resize
-    // const isMobile = window.innerWidth <= 768; // Check if the device is mobile
-    // this.camera.position.z = isMobile ? 2.5 : 1.5; // Zoom out for mobile devices
+    const isMobile = window.innerWidth <= 768; // Check if the device is mobile
+    this.camera.position.z = isMobile ? 2.5 : 1.5; // Zoom out for mobile devices
   }
 
   private setRendererSize(): void {
