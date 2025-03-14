@@ -7,8 +7,6 @@ import { StarrySkyComponent } from './starry-sky/starry-sky.component';
 import { HomeComponent } from './home/home.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LoadingComponent } from './utility/loading/loading.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoadingInterceptor } from './interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +21,6 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
     LayoutModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

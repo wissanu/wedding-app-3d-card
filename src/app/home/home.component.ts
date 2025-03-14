@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import * as StackBlur from 'stackblur-canvas';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-home',
@@ -29,9 +30,10 @@ export class HomeComponent implements OnInit {
   private textureLoader = new THREE.TextureLoader();
   private starTexture!: THREE.Texture;
 
-  constructor(private route: ActivatedRoute, private router: Router, private el: ElementRef, private BreakpointObserver: BreakpointObserver) {}
+  constructor(private route: ActivatedRoute, private router: Router, private el: ElementRef, private BreakpointObserver: BreakpointObserver, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
+    
     this.BreakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
       this.isMobile = result.matches;
     })
@@ -40,10 +42,12 @@ export class HomeComponent implements OnInit {
         this.scrollToElement(fragment);
       }
     });
+    this.loadingService.show();
     this.initThreeJS();
     this.starTexture = this.textureLoader.load('assets/white_circle.png'); 
     this.addWindowResizeListener();
     this.animate();
+    this.loadingService.hide();
   }
 
   toggleNav() {
