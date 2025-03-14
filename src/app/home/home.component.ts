@@ -47,7 +47,25 @@ export class HomeComponent implements OnInit {
     this.starTexture = this.textureLoader.load('assets/white_circle.png'); 
     // this.addWindowResizeListener();
     this.animate();
-    this.loadingService.hide();
+  }
+
+  ngOnDestroy(): void {
+    if (this.renderer) {
+      this.renderer.dispose();
+    }
+    if (this.scene) {
+      this.scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry.dispose();
+          if (Array.isArray(object.material)) {
+            object.material.forEach(material => material.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+      });
+    }
+    // window.removeEventListener('resize', this.onWindowResize.bind(this));
   }
 
   toggleNav() {
@@ -55,53 +73,120 @@ export class HomeComponent implements OnInit {
   }
 
   private initThreeJS(): void {
+    this.setupRenderer();
+    this.setupScene();
+    this.setupCamera();
+    this.setupLights();
+    this.loadTextures();
+  }
+
+  // private initThreeJS(): void {
+  //   const canvas = this.el.nativeElement.querySelector('#c');
+
+  //   // Renderer
+  //   this.renderer = new THREE.WebGLRenderer({
+  //     canvas,
+  //     antialias: true,
+  //     alpha: true
+  //   });
+    
+  //   // this.renderer.setClearColor(new THREE.Color('#1D2951'));
+  //   this.renderer.setPixelRatio(window.devicePixelRatio);
+  //   this.setRendererSize();
+    
+
+  //   // Scene
+  //   this.scene = new THREE.Scene();
+
+  //   const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+  //   this.scene.add(ambientLight);
+
+  //   const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+  //   directionalLight.position.set(5, 5, 5);
+  //   this.scene.add(directionalLight);
+
+  //   // Light
+  //   // const color = 0xffffff;
+  //   // const intensity = 1;
+  //   // const light = new THREE.DirectionalLight(color, intensity);
+  //   // light.position.set(-1, 2, 4);
+  //   // this.scene.add(light);
+
+  //   // Camera
+  //   const fov = 45;
+  //   const aspect = canvas.clientWidth / (canvas.clientHeight);
+  //   const near = 0.1;
+  //   const far = 100;
+  //   this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  //   this.camera.position.z = 3;
+
+  //   // Adjust camera position for mobile devices
+  //   const isMobile = window.innerWidth <= 768; // Check if the device is mobile
+  //   this.camera.position.z = isMobile ? 2.5 : 1.5; // Zoom out for mobile devices
+
+  //   // Texture Loader with Loading Manager
+  //   const loadingManager = new THREE.LoadingManager(
+  //     () => {
+  //       this.texturesLoaded = true;
+  //       this.loadingService.hide();
+  //       this.animate();
+  //     },
+  //     (url, loaded, total) => {
+  //       console.log(`Loading ${url}: ${loaded}/${total}`);
+  //     },
+  //     (url) => {
+  //       console.error(`Failed to load ${url}`);
+  //     }
+  //   );
+
+  //   const loader = new THREE.TextureLoader(loadingManager);
+
+  //   // Load textures
+  //   const frontTexture = loader.load('assets/images/front.png');
+  //   const backTexture = loader.load('assets/images/back.png');
+
+  //   // Flip the back texture
+  //   backTexture.repeat.x = -1;
+  //   backTexture.offset.x = 1;
+
+  //   // Add 3D Card
+  //   this.add3DCard(frontTexture, backTexture);
+  // }
+
+  private setupRenderer(): void {
     const canvas = this.el.nativeElement.querySelector('#c');
-
-    // Renderer
-    this.renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      alpha: true
-    });
-    
-    // this.renderer.setClearColor(new THREE.Color('#1D2951'));
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     this.setRendererSize();
-    
-
-    // Scene
+  }
+  
+  private setupScene(): void {
     this.scene = new THREE.Scene();
-
-    const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
-    this.scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-    directionalLight.position.set(5, 5, 5);
-    this.scene.add(directionalLight);
-
-    // Light
-    // const color = 0xffffff;
-    // const intensity = 1;
-    // const light = new THREE.DirectionalLight(color, intensity);
-    // light.position.set(-1, 2, 4);
-    // this.scene.add(light);
-
-    // Camera
+  }
+  
+  private setupCamera(): void {
+    const canvas = this.renderer.domElement;
     const fov = 45;
-    const aspect = canvas.clientWidth / (canvas.clientHeight);
+    const aspect = canvas.clientWidth / canvas.clientHeight;
     const near = 0.1;
     const far = 100;
     this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    this.camera.position.z = 3;
-
-    // Adjust camera position for mobile devices
-    const isMobile = window.innerWidth <= 768; // Check if the device is mobile
-    this.camera.position.z = isMobile ? 2.5 : 1.5; // Zoom out for mobile devices
-
-    // Texture Loader with Loading Manager
+    this.camera.position.z = window.innerWidth <= 768 ? 2.5 : 1.5;
+  }
+  
+  private setupLights(): void {
+    const ambientLight = new THREE.AmbientLight(0x404040);
+    this.scene.add(ambientLight);
+  
+    const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+    directionalLight.position.set(5, 5, 5);
+    this.scene.add(directionalLight);
+  }
+  
+  private loadTextures(): void {
     const loadingManager = new THREE.LoadingManager(
       () => {
         this.texturesLoaded = true;
+        this.loadingService.hide();
         this.animate();
       },
       (url, loaded, total) => {
@@ -109,20 +194,15 @@ export class HomeComponent implements OnInit {
       },
       (url) => {
         console.error(`Failed to load ${url}`);
+        // Handle error (e.g., load fallback texture)
       }
     );
-
+  
     const loader = new THREE.TextureLoader(loadingManager);
-
-    // Load textures
     const frontTexture = loader.load('assets/images/front.png');
     const backTexture = loader.load('assets/images/back.png');
-
-    // Flip the back texture
     backTexture.repeat.x = -1;
     backTexture.offset.x = 1;
-
-    // Add 3D Card
     this.add3DCard(frontTexture, backTexture);
   }
 
@@ -191,19 +271,33 @@ export class HomeComponent implements OnInit {
 
 
 
-  private animate(): void {
-    if (!this.texturesLoaded) return;
+  // private animate(): void {
+  //   if (!this.texturesLoaded) return;
   
+  //   const render = (time: number) => {
+  //     // Rotate the card group for a 3D effect if shouldRotate is true
+  //     if (this.cardGroup && this.shouldRotate) {
+  //       this.cardGroup.rotation.y += 0.01;
+  //     }
+
+  //     this.renderer.render(this.scene, this.camera);
+  //     requestAnimationFrame(render);
+  //   };
+  //   requestAnimationFrame(render);
+  // }
+  private animate(): void {
     const render = (time: number) => {
-      // Rotate the card group for a 3D effect if shouldRotate is true
       if (this.cardGroup && this.shouldRotate) {
         this.cardGroup.rotation.y += 0.01;
       }
-
+  
       this.renderer.render(this.scene, this.camera);
       requestAnimationFrame(render);
     };
-    requestAnimationFrame(render);
+  
+    if (this.texturesLoaded) {
+      requestAnimationFrame(render);
+    }
   }
 
   scrollToElement(elementId: string): void {
