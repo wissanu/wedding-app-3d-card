@@ -39,6 +39,33 @@ export class HomeComponent implements OnInit, OnDestroy {
     'assets/images/wed5.jpg',
   ];
 
+  timelineItems = [
+    {
+      time: '07:00 น.',
+      title: 'พิธีสงฆ์',
+      description: 'ร่วมกันฟังพระสวด ให้พรเพื่อเป็นสิริมงคล',
+      icon: 'assets/icon/schedule2.png'
+    },
+    {
+      time: '09:09 น.',
+      title: 'พิธีแห่ขันหมาก',
+      description: 'เดินขบวนแห่ขันหมาก เพื่อแสดงความจริงใจ',
+      icon: 'assets/icon/schedule1.png'
+    },
+    {
+      time: '10.00 น.',
+      title: 'พิธีหลั่งน้ำ',
+      description: 'ร่วมกันรดน้ำสังข์ เพื่ออวยพรบ่าวสาว',
+      icon: 'assets/icon/schedule3.png'
+    },
+    {
+      time: '11.00 น.',
+      title: 'รับประทานอาหาร',
+      description: 'ร่วมกันรับประทานอาหาร บุฟเฟ่ด์โต๊ะจีน',
+      icon: 'assets/icon/schedule4.png'
+    }
+  ];
+
   constructor(private route: ActivatedRoute, private router: Router, private el: ElementRef, private BreakpointObserver: BreakpointObserver, private loadingService: LoadingService) {}
 
   ngOnInit(): void {

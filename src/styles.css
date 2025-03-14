@@ -54,6 +54,40 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'ChakraPetch';
+  src: url('/assets/fonts/ChakraPetch-Regular.ttf') format('truetype');
+  font-weight: 200; /* Normal */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ChakraPetch';
+  src: url('/assets/fonts/ChakraPetch-Medium.ttf') format('truetype');
+  font-weight: 300; /* Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ChakraPetch';
+  src: url('/assets/fonts/ChakraPetch-Light.ttf') format('truetype');
+  font-weight: 100; /* Normal */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ChakraPetch';
+  src: url('/assets/fonts/ChakraPetch-Bold.ttf') format('truetype');
+  font-weight: 300; /* Bold */
+  font-style: bold;
+}
+@font-face {
+  font-family: 'ChakraPetch';
+  src: url('/assets/fonts/ChakraPetch-Italic.ttf') format('truetype');
+  font-weight: 100; /* Bold */
+  font-style: italic;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -70,6 +104,32 @@ html, body {
   font-family: 'whisperingsignature';
 }
 
-.normal-text {
+.eng-normal-text {
   font-family: 'rusticroadway';
+}
+
+.thai-normal-text-regular-100 {
+  font-family: 'ChakraPetch';
+  font-weight: 100;
+  font-style: normal;
+}
+.thai-normal-text-regular-200 {
+  font-family: 'ChakraPetch';
+  font-weight: 200;
+  font-style: normal;
+}
+.thai-normal-text-regular-300 {
+  font-family: 'ChakraPetch';
+  font-weight: 300;
+  font-style: normal;
+}
+.thai-normal-text-bold {
+  font-family: 'ChakraPetch';
+  font-weight: 300;
+  font-style: bold;
+}
+.thai-normal-text-italic {
+  font-family: 'ChakraPetch';
+  font-weight: 100;
+  font-style: italic;
 }
