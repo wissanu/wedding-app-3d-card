@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
 
     // Camera
     const fov = 45;
-    const aspect = canvas.clientWidth / canvas.clientHeight;
+    const aspect = canvas.clientWidth / (canvas.clientHeight);
     const near = 0.1;
     const far = 100;
     this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far);

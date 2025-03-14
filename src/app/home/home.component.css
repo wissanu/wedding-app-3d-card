@@ -1,0 +1,35 @@
+#c {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  .handwrite-space {
+    letter-spacing: 4px;
+    word-spacing: 5px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
+  .handwrite-newline {
+    white-space: pre-wrap;
+  }
+
+  @media screen and (max-width: 768px) {
+    .mobile-bottom-30 {
+      bottom: 30%;
+    }
+    .mobile-bottom-10 {
+      bottom: 10%;
+    }
+    .mobile-bottom-20 {
+      bottom: 20%;
+    }
+    .mobile-height-120{
+      height: 120%;
+    }
+    .mobile-min-height {
+      min-height: 600px !important;
+    }
+  }
