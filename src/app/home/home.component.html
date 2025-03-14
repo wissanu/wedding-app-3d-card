@@ -14,15 +14,14 @@
     <!-- bg-[#FFFFFA] -->
     <section id="welcome" class="text-center bg-[url('/assets/images/homebg4.png')] bg-cover bg-center h-screen">
         <div class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-screen">
-            <!-- min-h-[600px] -->
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 relative h-screen mobile-min-height">
-                <div class="relative z-10 transform lg:left-[calc(20%)] flex items-center flex-col justify-center"> <!--order-last sm:order-first-->
+                <div class="relative z-10 transform lg:left-[calc(20%)] flex items-center flex-col justify-center">
                     <h1 class="handwrite-text handwrite-space handwrite-newline text-[#BEBB4B] md:text-4xl sm:text-3xl">Wissanu Thungrut&#10;&&#10;Kamolthip Wiangwises</h1>
                     <p class="text-lg normal-text">May 3, 2026</p>
                     <div id="countdown" class="text-2xl font-bold my-4"></div>
                     <p class="italic">Dress Code: Formal Attire</p>
                 </div>
-                <div class="mobile-height-120 mobile-bottom-20 relative"> <!-- order-first sm:order-last-->
+                <div class="mobile-height-120 mobile-bottom-20 relative">
                     <canvas id="c"></canvas>
                 </div>
             </div>
@@ -30,14 +29,23 @@
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-white">
-        <h2 class="text-3xl text-center normal-text">Gallery & Moments</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-5">
-        <img src="assets/photo1.jpg" class="rounded-lg shadow-md" />
-        <img src="assets/photo2.jpg" class="rounded-lg shadow-md" />
-        <img src="assets/photo3.jpg" class="rounded-lg shadow-md" />
+    <section id="gallery" class="py-20 bg-white overflow-x-hidden"> <!-- Prevent horizontal overflow -->
+        <h2 class="text-3xl text-center normal-text mb-6 py-10">Gallery & Moments</h2>
+      
+        <!-- Swiper Container -->
+        <div class="swiper-container h-[50vh] max-w-screen-xl mx-auto"> <!-- Constrain width -->
+          <div class="swiper-wrapper">
+            <!-- Swiper Slides -->
+            <div class="swiper-slide w-64 md:w-80 lg:w-96" *ngFor="let img of images">
+              <img [src]="img" class="rounded-lg shadow-md w-full h-full object-cover" />
+            </div>
+          </div>
+      
+          <!-- Optional: Add Navigation Buttons -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
         </div>
-    </section>
+      </section>
 
     <!-- Guestbook Section -->
     <!-- <section id="guestbook" class="py-10 bg-[#FAF3E0] text-center">

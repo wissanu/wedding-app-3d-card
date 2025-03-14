@@ -1,17 +1,19 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, AfterViewInit , ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import * as StackBlur from 'stackblur-canvas';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { LoadingService } from '../services/loading.service';
-
+import { SwiperOptions } from 'swiper/types';
+import Swiper from 'swiper';
+import { Navigation, EffectCoverflow } from 'swiper/modules'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   public title = 'wedding-app-3d';
   public isMobile: boolean = false;
@@ -29,11 +31,19 @@ export class HomeComponent implements OnInit {
   private particleMaterial!: THREE.ShaderMaterial;
   private textureLoader = new THREE.TextureLoader();
   private starTexture!: THREE.Texture;
+  public images = [
+    'assets/images/wed1.jpg',
+    'assets/images/wed2.jpg',
+    'assets/images/wed3.jpg',
+    'assets/images/wed4.jpg',
+    'assets/images/wed5.jpg',
+  ];
 
   constructor(private route: ActivatedRoute, private router: Router, private el: ElementRef, private BreakpointObserver: BreakpointObserver, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
     
+    this.initSwiper();
     this.BreakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
       this.isMobile = result.matches;
     })
@@ -65,7 +75,29 @@ export class HomeComponent implements OnInit {
         }
       });
     }
-    window.removeEventListener('resize', this.onWindowResize.bind(this));
+    // window.removeEventListener('resize', this.onWindowResize.bind(this));
+  }
+
+  initSwiper(): void {
+    Swiper.use([Navigation, EffectCoverflow]);
+
+    new Swiper('.swiper-container', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: 30,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
   }
 
   toggleNav() {
