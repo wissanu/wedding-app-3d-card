@@ -186,15 +186,6 @@ export class HomeComponent implements OnInit {
     this.camera.position.z = isMobile ? 2.5 : 1.5; // Zoom out for mobile devices
   }
 
-  // private setRendererSize(): void {
-  //   const width = window.innerWidth;
-  //   const height = window.innerHeight;
-  //   this.renderer.setSize(width, height, false);
-  //   this.camera.aspect = width / height;
-  //   this.camera.updateProjectionMatrix();
-  // }
-
-
   private setRendererSize(): void {
     const canvas = this.renderer.domElement;
     const width = canvas.clientWidth;
