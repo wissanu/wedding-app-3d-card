@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     this.loadingService.show();
     this.initThreeJS();
     this.starTexture = this.textureLoader.load('assets/white_circle.png'); 
-    this.addWindowResizeListener();
+    // this.addWindowResizeListener();
     this.animate();
     this.loadingService.hide();
   }
