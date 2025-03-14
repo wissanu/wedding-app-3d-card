@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Router, NavigationEnd } from '@angular/router';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +12,18 @@ export class AppComponent implements OnInit{
   public isMobile: boolean = false;
   public isNavActive = false;
 
-  constructor(private BreakpointObserver: BreakpointObserver) {}
+  constructor(private router: Router, private loadingService: LoadingService) {}
 
 
-  ngOnInit(): void {
-    this.BreakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
-      this.isMobile = result.matches;
-    })
-  }
-
-  toggleNav() {
-    this.isNavActive = !this.isNavActive;
+  ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Simulate loading delay (replace with actual logic)
+        this.loadingService.show();
+        setTimeout(() => {
+          this.loadingService.hide();
+        }, 2000); // Hide after 2 seconds (adjust as needed)
+      }
+    });
   }
 }

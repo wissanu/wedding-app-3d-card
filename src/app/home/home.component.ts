@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import * as StackBlur from 'stackblur-canvas';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,9 @@ import * as StackBlur from 'stackblur-canvas';
 })
 export class HomeComponent implements OnInit {
 
+  public title = 'wedding-app-3d';
+  public isMobile: boolean = false;
+  public isNavActive = false;
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
@@ -25,9 +29,12 @@ export class HomeComponent implements OnInit {
   private textureLoader = new THREE.TextureLoader();
   private starTexture!: THREE.Texture;
 
-  constructor(private route: ActivatedRoute, private router: Router, private el: ElementRef) {}
+  constructor(private route: ActivatedRoute, private router: Router, private el: ElementRef, private BreakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
+    this.BreakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+      this.isMobile = result.matches;
+    })
     this.route.fragment.subscribe(fragment => {
       if (fragment) {
         this.scrollToElement(fragment);
@@ -37,6 +44,10 @@ export class HomeComponent implements OnInit {
     this.starTexture = this.textureLoader.load('assets/white_circle.png'); 
     this.addWindowResizeListener();
     this.animate();
+  }
+
+  toggleNav() {
+    this.isNavActive = !this.isNavActive;
   }
 
   private initThreeJS(): void {
