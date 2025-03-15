@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private textureLoader = new THREE.TextureLoader();
   private starTexture!: THREE.Texture;
   public images = [
-    'assets/images/wed1.jpg',
+    'assets/images/wed9.jpg',
     'assets/images/wed2.jpg',
     'assets/images/wed3.jpg',
     'assets/images/wed4.jpg',
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     'assets/images/wed6.jpg',
     'assets/images/wed7.jpg',
     'assets/images/wed8.jpg',
-    'assets/images/wed9.jpg',
+    'assets/images/wed1.jpg',
     'assets/images/wed10.jpg',
   ];
   // public locationUrl = 'https://maps.app.goo.gl/HtKnU9PYRAJiCeou5'; 
