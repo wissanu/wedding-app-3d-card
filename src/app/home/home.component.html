@@ -169,23 +169,21 @@
       <li><a routerLink="/starry-sky">Starry Sky</a></li> 
     </nav>
   </footer> -->
-  <nav *ngIf='isMobile' class="fixed bottom-0 left-0 w-full bg-white shadow-lg z-[9999] pt-8">
-    <!-- Downward Curve -->
-    <div class="absolute left-0 top-0 w-full h-16 bg-white" style="clip-path: ellipse(100% 100% at 50% -50%);"></div>
-
-    <!-- Logo -->
-    <div class="absolute left-1/2 transform -translate-x-1/2 -top-8 flex items-center justify-center">
-        <div class="bg-white rounded-full p-3 shadow-lg border border-gray-200">
-        <img src="./../assets/logo.png" alt="tor ploy wedding app" class="w-10 h-10">
+  <nav *ngIf='isMobile' class="fixed bottom-0 left-0 w-full bg-white shadow-lg z-[9999] pt-10">
+    
+        <!-- Logo -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 -top-8 flex items-center justify-center">
+            <div class="bg-white rounded-full p-3 shadow-sm border-t-2 border-gray-200">
+                <img src="./../assets/logo.png" alt="tor ploy wedding app" class="w-12 h-12">
+            </div>
         </div>
-    </div>
 
-    <!-- Navbar Links -->
-    <ul class="flex justify-around items-center pb-4">
-        <li><a href="#welcome" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Welcome</a></li>
-        <li><a href="#gallery" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Gallery</a></li>
-        <li><a href="#wedding-schedule" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Schedule</a></li>
-        <li><a href="#wedding-details" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Locations</a></li>
-    </ul>
+        <!-- Navbar Links -->
+        <ul class="flex justify-around items-center pb-4">
+            <li><a href="#welcome" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Welcome</a></li>
+            <li><a href="#gallery" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Gallery</a></li>
+            <li><a href="#wedding-schedule" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Schedule</a></li>
+            <li><a href="#wedding-details" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Locations</a></li>
+        </ul>
     </nav>
 </div>
