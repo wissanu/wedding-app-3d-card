@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private particleMaterial!: THREE.ShaderMaterial;
   private textureLoader = new THREE.TextureLoader();
   private starTexture!: THREE.Texture;
+  public isImageFullScreen = false;
   public images = [
     'assets/images/wed9.jpg',
     'assets/images/wed2.jpg',
@@ -134,6 +135,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         prevEl: '.swiper-button-prev',
       },
     });
+  }
+
+  public toggleImageFullScreen(): void {
+    this.isImageFullScreen = !this.isImageFullScreen;
   }
 
   toggleNav() {

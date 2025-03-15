@@ -157,9 +157,30 @@
                 </div>
             
                 <!-- Map Image (Center) -->
-                <div class="flex justify-center">
+                <!-- <div class="flex justify-center">
                 <img [src]="mapImage" alt="Map Image" class="max-w-full h-auto rounded-lg shadow-sm" />
-                </div>
+                </div> -->
+                <div class="flex justify-center">
+                    <div class="relative">
+                      <img
+                        [src]="mapImage"
+                        alt="Map Image"
+                        class="max-w-full h-auto rounded-lg shadow-sm cursor-pointer"
+                        [ngClass]="{ 'fixed inset-0 w-screen h-screen object-contain z-50': isImageFullScreen }"
+                        (click)="toggleImageFullScreen()"
+                      />
+                      <!-- Close button (visible only in full-screen mode) -->
+                      <button
+                        *ngIf="isImageFullScreen"
+                        class="fixed top-4 right-4 bg-white rounded-full p-2 shadow-lg z-50"
+                        (click)="toggleImageFullScreen()"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
             </div>
         </div>
     </main>
