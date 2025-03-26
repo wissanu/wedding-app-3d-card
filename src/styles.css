@@ -87,7 +87,18 @@
   font-weight: 100; /* Bold */
   font-style: italic;
 }
-
+@font-face {
+  font-family: 'Cormorant';
+  src: url('/assets/fonts/cormorant-normal.ttf') format('truetype');
+  font-weight: 100; /* Bold */
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Cormorant';
+  src: url('/assets/fonts/cormorant-italic.ttf') format('truetype');
+  font-weight: 100; /* Bold */
+  font-style: italic;
+}
 * {
   margin: 0;
   padding: 0;
@@ -130,6 +141,16 @@ html, body {
 }
 .thai-normal-text-italic {
   font-family: 'ChakraPetch';
+  font-weight: 100;
+  font-style: italic;
+}
+.cormorant-normal {
+  font-family: 'Cormorant';
+  font-weight: 100;
+  font-style: normal;
+}
+.cormorant-italic {
+  font-family: 'Cormorant';
   font-weight: 100;
   font-style: italic;
 }
