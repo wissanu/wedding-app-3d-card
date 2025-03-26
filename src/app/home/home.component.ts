@@ -33,16 +33,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   private starTexture!: THREE.Texture;
   public isImageFullScreen = false;
   public images = [
-    'assets/images/wed9.jpg',
-    'assets/images/wed2.jpg',
-    'assets/images/wed3.jpg',
-    'assets/images/wed4.jpg',
-    'assets/images/wed5.jpg',
-    'assets/images/wed6.jpg',
-    'assets/images/wed7.jpg',
-    'assets/images/wed8.jpg',
-    'assets/images/wed1.jpg',
-    'assets/images/wed10.jpg',
+    'assets/images/pre_wed9.jpg',
+    'assets/images/pre_wed2.jpg',
+    'assets/images/pre_wed3.jpg',
+    'assets/images/pre_wed4.jpg',
+    'assets/images/pre_wed5.jpg',
+    'assets/images/pre_wed6.jpg',
+    'assets/images/pre_wed7.jpg',
+    'assets/images/pre_wed8.jpg',
+    'assets/images/pre_wed1.jpg',
+    'assets/images/pre_wed10.jpg',
+    'assets/images/pre_wed11.jpg',
+    'assets/images/pre_wed12.jpg',
+    'assets/images/pre_wed13.jpg',
   ];
   // public locationUrl = 'https://maps.app.goo.gl/HtKnU9PYRAJiCeou5'; 
   public locationUrl = 'https://www.google.com/maps/place/Vanessa+%7C+Wedding+Venue/@13.7150882,100.3089309,17z/data=!3m1!4b1!4m6!3m5!1s0x30e2959be89a8a95:0x366a3fd08017f0e1!8m2!3d13.715083!4d100.3115058!16s%2Fg%2F12hkzkwm_?coh=245189&entry=tts&g_ep=EgoyMDI1MDMxMS4wIPu8ASoJLDEwMjExNDU1SAFQAw%3D%3D';
