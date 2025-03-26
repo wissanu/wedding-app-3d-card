@@ -1,78 +1,47 @@
 <div class="min-h-screen">
-  <nav
-    *ngIf="!isMobile"
-    class="sticky top-0 left-0 w-full flex justify-between items-center px-5 bg-gray-50 z-[9999] shadow-sm"
-  >
+  <nav *ngIf="!isMobile"
+    class="sticky top-0 left-0 w-full flex justify-between items-center px-5 bg-gray-50 z-[9999] shadow-sm">
     <!-- Navbar Brand -->
     <div class="navbar-brand">
-      <img
-        src="./../assets/logo.png"
-        alt="tor ploy wedding app"
-        class="h-auto max-w-full w-12"
-      />
+      <img src="./../assets/logo.png" alt="tor ploy wedding app" class="h-auto max-w-full w-12" />
     </div>
 
     <!-- Navbar Links -->
     <ul class="flex space-x-5 list-none m-0 p-0">
       <li>
-        <a
-          href="#welcome"
-          class="no-underline text-gray-700 hover:text-[#DBC6A7] transition-colors"
-          >Welcome</a
-        >
+        <a href="#welcome" class="no-underline text-gray-700 hover:text-[#DBC6A7] transition-colors">Welcome</a>
       </li>
       <li>
-        <a
-          href="#gallery"
-          class="no-underline text-gray-700 hover:text-[#DBC6A7] transition-colors"
-          >Gallery</a
-        >
+        <a href="#gallery" class="no-underline text-gray-700 hover:text-[#DBC6A7] transition-colors">Gallery</a>
       </li>
       <li>
-        <a
-          href="#wedding-schedule"
-          class="no-underline text-gray-700 hover:text-[#DBC6A7] transition-colors"
-          >Schedule</a
-        >
+        <a href="#wedding-schedule"
+          class="no-underline text-gray-700 hover:text-[#DBC6A7] transition-colors">Schedule</a>
       </li>
       <li>
-        <a
-          href="#wedding-details"
-          class="no-underline text-gray-700 hover:text-[#DBC6A7] transition-colors"
-          >Locations</a
-        >
+        <a href="#wedding-details"
+          class="no-underline text-gray-700 hover:text-[#DBC6A7] transition-colors">Locations</a>
       </li>
     </ul>
   </nav>
   <main>
     <!-- Welcome Section -->
     <!-- text-[#996D0A] -->
-    <section
-      id="welcome"
-      class="text-center bg-[url('/assets/images/homebg4.png')] bg-cover bg-center h-screen"
-    >
-      <div
-        class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-screen"
-      >
+    <section id="welcome" class="text-center bg-[url('/assets/images/homebg4.png')] bg-cover bg-center h-screen">
+      <div class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-screen">
         <div
-          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 relative h-screen mobile-min-height"
-        >
+          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 relative h-screen mobile-min-height">
           <!-- First inner div -->
           <div
-            class="relative z-10 transform lg:left-[calc(20%)] flex items-center flex-col justify-center order-2 sm:order-2 lg:order-1 mobile-bottom-45"
-          >
-            <h1
-              class="cormorant-normal mb-[15px] handwrite-space handwrite-newline md:text-4xl sm:text-3xl"
-            >
+            class="relative z-10 transform lg:left-[calc(20%)] flex items-center flex-col justify-center order-2 sm:order-2 lg:order-1 mobile-bottom-25">
+            <h1 class="cormorant-normal mb-[15px] handwrite-space handwrite-newline md:text-4xl sm:text-3xl">
               Kamolthip Wiangwises&#10;&&#10;Wissanu Thungrut
             </h1>
             <p class="md:text-4xl sm:text-3xl cormorant-italic">May 3, 2025</p>
             <div id="countdown" class="text-2xl font-bold my-4"></div>
 
             <div class="flex items-center py-6">
-              <p class="cormorant-normal mr-2 handwrite-space">
-                Theme Color:
-              </p>
+              <p class="cormorant-normal mr-2 handwrite-space">Theme Color:</p>
               <div class="flex space-x-2">
                 <div class="w-6 h-6 bg-[#cdaf6b] rounded-full"></div>
                 <div class="w-6 h-6 bg-[#fac4aa] rounded-full"></div>
@@ -83,9 +52,7 @@
           </div>
 
           <!-- Second inner div -->
-          <div
-            class="mobile-height-120 mobile-bottom-20 relative order-1 sm:order-1 lg:order-2"
-          >
+          <div class="mobile-height-120 mobile-bottom-20 relative order-1 sm:order-1 lg:order-2">
             <canvas id="c"></canvas>
           </div>
         </div>
@@ -104,14 +71,8 @@
         <!-- Constrain width -->
         <div class="swiper-wrapper">
           <!-- Swiper Slides -->
-          <div
-            class="swiper-slide w-64 md:w-80 lg:w-96"
-            *ngFor="let img of images"
-          >
-            <img
-              [src]="img"
-              class="rounded-lg shadow-md w-full h-full object-cover"
-            />
+          <div class="swiper-slide w-64 md:w-80 lg:w-96" *ngFor="let img of images">
+            <img [src]="img" class="rounded-lg shadow-md w-full h-full object-cover" />
           </div>
         </div>
 
@@ -122,14 +83,9 @@
     </section>
 
     <!-- Wedding Schedule for mobile -->
-    <section
-      *ngIf="isMobile"
-      id="wedding-schedule"
-      class="relative bg-[url('/assets/images/homebg4.png')] bg-cover bg-center sm:h-full md:h-[80vh]"
-    >
-      <div
-        class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-full"
-      >
+    <section *ngIf="isMobile" id="wedding-schedule"
+      class="relative bg-[url('/assets/images/homebg4.png')] bg-cover bg-center sm:h-full md:h-[80vh]">
+      <div class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-full">
         <h1 class="text-3xl text-center mb-8 py-10 eng-normal-text">
           Wedding Day Timeline
         </h1>
@@ -138,19 +94,11 @@
           <div class="absolute left-4 top-0 h-full w-1 bg-gray-300"></div>
 
           <!-- Timeline Items -->
-          <div
-            *ngFor="let item of timelineItems; let i = index"
-            class="flex items-start"
-          >
+          <div *ngFor="let item of timelineItems; let i = index" class="flex items-start">
             <!-- Icon and Time -->
             <div
-              class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10"
-            >
-              <img
-                [src]="item.icon"
-                alt="{{ item.title }}"
-                class="w-8 md:w-16 lg:w-32"
-              />
+              class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
+              <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
             </div>
             <div class="ml-4">
               <div class="text-lg">{{ item.time }}</div>
@@ -163,42 +111,24 @@
     </section>
 
     <!-- Wedding Schedule for desktop -->
-    <section
-      *ngIf="!isMobile"
-      id="wedding-schedule"
-      class="relative bg-[url('/assets/images/homebg4.png')] bg-cover bg-center h-[80vh]"
-    >
-      <div
-        class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-full"
-      >
+    <section *ngIf="!isMobile" id="wedding-schedule"
+      class="relative bg-[url('/assets/images/homebg4.png')] bg-cover bg-center h-[80vh]">
+      <div class="backdrop-blur-2xl bg-white/30 border border-white/10 rounded-lg shadow-sm py-10 h-full">
         <h1 class="text-3xl text-center mb-8 py-10 eng-normal-text">
           Wedding Day Timeline
         </h1>
         <div class="space-y-8 relative">
           <!-- Timeline Line -->
-          <div
-            class="absolute left-1/2 top-0 h-full w-1 bg-gray-300 transform -translate-x-1/2"
-          ></div>
+          <div class="absolute left-1/2 top-0 h-full w-1 bg-gray-300 transform -translate-x-1/2"></div>
 
           <!-- Timeline Items -->
-          <div
-            *ngFor="let item of timelineItems; let i = index"
-            class="flex items-start justify-center"
-          >
+          <div *ngFor="let item of timelineItems; let i = index" class="flex items-start justify-center">
             <!-- For odd items (1, 3, 5), show text on the left -->
-            <div
-              *ngIf="(i + 1) % 2 !== 0"
-              class="flex flex-row-reverse items-center w-1/2"
-            >
+            <div *ngIf="(i + 1) % 2 !== 0" class="flex flex-row-reverse items-center w-1/2">
               <!-- Icon -->
               <div
-                class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10"
-              >
-                <img
-                  [src]="item.icon"
-                  alt="{{ item.title }}"
-                  class="w-8 md:w-16 lg:w-32"
-                />
+                class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
+                <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
               </div>
               <!-- Text -->
               <div class="mr-4 text-right">
@@ -212,13 +142,8 @@
             <div *ngIf="(i + 1) % 2 === 0" class="flex items-center w-1/2">
               <!-- Icon -->
               <div
-                class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10"
-              >
-                <img
-                  [src]="item.icon"
-                  alt="{{ item.title }}"
-                  class="w-8 md:w-16 lg:w-32"
-                />
+                class="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center z-10">
+                <img [src]="item.icon" alt="{{ item.title }}" class="w-8 md:w-16 lg:w-32" />
               </div>
               <!-- Text -->
               <div class="ml-4">
@@ -245,19 +170,12 @@
         </section> -->
 
     <!-- Wedding Details -->
-    <div
-      id="wedding-details"
-      class="container mx-auto pb-[120px] px-4 pt-10 h-full"
-    >
+    <div id="wedding-details" class="container mx-auto pb-[120px] px-4 pt-10 h-full">
       <h2 class="text-3xl text-center mb-8 eng-normal-text py-10">Location</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
         <!-- QR Code (Left) -->
         <div class="flex flex-col items-center">
-          <img
-            [src]="qrCodeImage"
-            alt="QR Code for Location"
-            class="w-48 h-48 mb-4"
-          />
+          <img [src]="qrCodeImage" alt="QR Code for Location" class="w-48 h-48 mb-4" />
           <p class="text-gray-600 text-sm text-center mt-2">
             สแกน QR CODE เพื่อเปิดแผนที่นำทาง
           </p>
@@ -265,16 +183,10 @@
 
         <!-- Button Link (Right) -->
         <div class="flex flex-col items-center">
-          <a
-            [href]="locationUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="bg-amber-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-amber-300 transition duration-300 flex items-center w-64 relative"
-          >
+          <a [href]="locationUrl" target="_blank" rel="noopener noreferrer"
+            class="bg-amber-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-amber-300 transition duration-300 flex items-center w-64 relative">
             <!-- Square Box -->
-            <div
-              class="w-1/4 h-full bg-amber-100 absolute left-0 top-0 flex items-center justify-center"
-            >
+            <div class="w-1/4 h-full bg-amber-100 absolute left-0 top-0 flex items-center justify-center">
               <!-- Share Icon -->
               <i class="fas fa-share text-amber-500"></i>
             </div>
@@ -292,35 +204,17 @@
                 </div> -->
         <div class="flex justify-center">
           <div class="relative">
-            <img
-              [src]="mapImage"
-              alt="Map Image"
-              class="max-w-full h-auto rounded-lg shadow-sm cursor-pointer"
+            <img [src]="mapImage" alt="Map Image" class="max-w-full h-auto rounded-lg shadow-sm cursor-pointer"
               [ngClass]="{
                 'fixed inset-0 w-screen h-screen object-contain z-50':
                   isImageFullScreen
-              }"
-              (click)="toggleImageFullScreen()"
-            />
+              }" (click)="toggleImageFullScreen()" />
             <!-- Close button (visible only in full-screen mode) -->
-            <button
-              *ngIf="isImageFullScreen"
-              class="fixed top-4 right-4 bg-white rounded-full p-2 shadow-lg z-50"
-              (click)="toggleImageFullScreen()"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+            <button *ngIf="isImageFullScreen" class="fixed top-4 right-4 bg-white rounded-full p-2 shadow-lg z-50"
+              (click)="toggleImageFullScreen()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
@@ -338,55 +232,27 @@
       <li><a routerLink="/starry-sky">Starry Sky</a></li> 
     </nav>
   </footer> -->
-  <nav
-    *ngIf="isMobile"
-    class="fixed bottom-0 left-0 w-full bg-white shadow-lg z-[9999] pt-10"
-  >
+  <nav *ngIf="isMobile" class="fixed bottom-0 left-0 w-full bg-white shadow-lg z-[9999] pt-10">
     <!-- Logo -->
-    <a
-      href="#welcome"
-      class="absolute left-1/2 transform -translate-x-1/2 -top-8 flex items-center justify-center"
-    >
-      <div
-        class="bg-white rounded-full p-3 shadow-sm border-t-2 border-gray-200"
-      >
-        <img
-          src="./../assets/logo.png"
-          alt="tor ploy wedding app"
-          class="w-12 h-12"
-        />
+    <a href="#welcome" class="absolute left-1/2 transform -translate-x-1/2 -top-8 flex items-center justify-center">
+      <div class="bg-white rounded-full p-3 shadow-sm border-t-2 border-gray-200">
+        <img src="./../assets/logo.png" alt="tor ploy wedding app" class="w-12 h-12" />
       </div>
     </a>
 
     <!-- Navbar Links -->
     <ul class="flex justify-around items-center pb-4">
       <li>
-        <a
-          href="#welcome"
-          class="text-gray-700 hover:text-[#DBC6A7] transition-colors"
-          >Welcome</a
-        >
+        <a href="#welcome" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Welcome</a>
       </li>
       <li>
-        <a
-          href="#gallery"
-          class="text-gray-700 hover:text-[#DBC6A7] transition-colors"
-          >Gallery</a
-        >
+        <a href="#gallery" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Gallery</a>
       </li>
       <li>
-        <a
-          href="#wedding-schedule"
-          class="text-gray-700 hover:text-[#DBC6A7] transition-colors"
-          >Schedule</a
-        >
+        <a href="#wedding-schedule" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Schedule</a>
       </li>
       <li>
-        <a
-          href="#wedding-details"
-          class="text-gray-700 hover:text-[#DBC6A7] transition-colors"
-          >Locations</a
-        >
+        <a href="#wedding-details" class="text-gray-700 hover:text-[#DBC6A7] transition-colors">Locations</a>
       </li>
     </ul>
   </nav>
