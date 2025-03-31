@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     {
       time: '11.00 น.',
       title: 'รับประทานอาหาร',
-      description: 'ร่วมกันรับประทานอาหาร บุฟเฟ่ด์โต๊ะจีน',
+      description: 'ร่วมกันรับประทานอาหารโต๊ะจีน ขอบคุณทุกท่านที่ร่วมงาน',
       icon: 'assets/icon/schedule4.png'
     }
   ];
